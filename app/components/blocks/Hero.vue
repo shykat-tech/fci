@@ -172,7 +172,7 @@ onMounted(() => {
   overflow: hidden;
 
   @media screen and (min-width: 1024px) {
-    height: 120vh;
+    height: 130vh;
   }
 
   .banner {

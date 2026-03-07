@@ -2,11 +2,11 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: false },
-  
+
   pages: true,
   app: {
     head: {
-      title: "Base",
+      title: "FCI",
 
       htmlAttrs: {
         lang: "en",
