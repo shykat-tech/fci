@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
 const { pageData } = defineProps({
   pageData: {
     type: Object,
@@ -8,22 +10,45 @@ const { pageData } = defineProps({
 
 const pageRef = ref(null);
 
-const componentLookup: any = {
-  hero: "Hero",
-  whatwedo: "WhatWeDo",
+/* Import blocks */
+import {
+  Hero,
+  WhatWeDo,
+  OurCollections,
+  Stats,
+  Customers,
+  Sustainability,
+  Testimonials,
+} from "~/components/blocks";
+
+/* Map wagtail block types to components */
+const componentLookup: Record<string, any> = {
+  hero: Hero,
+  what_we_do: WhatWeDo,
+  our_collection: OurCollections,
+  why_us: Stats,
+  customers: Customers,
+  sustainability: Sustainability,
+  testimonials: Testimonials,
+};
+
+/* Resolve correct component */
+const resolveComponent = (type: string) => {
+  return componentLookup[type] || null;
 };
 </script>
 
 <template>
   <div ref="pageRef" :key="pageData.id + pageData.meta.slug">
     <NuxtLazyHydrate
+      v-for="block in pageData.body"
+      :key="block.id"
       when-visible
-      v-for="(block, idx) in pageData.body"
-      :key="'comp-' + block.id"
     >
       <component
+        v-if="resolveComponent(block.type)"
+        :is="resolveComponent(block.type)"
         :id="'comp-' + block.id"
-        :is="resolveComponent('Lazy' + componentLookup[block.type])"
         :compData="block.value"
         :compId="block.id"
       />

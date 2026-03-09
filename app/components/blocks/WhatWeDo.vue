@@ -1,39 +1,87 @@
 <script setup>
 const bannerRef = ref(null);
+const contentRef = ref(null);
 const mainImg = ref(null);
 const pattern = ref(null);
+const cardsRef = ref(null);
 
 const { $gsap } = useNuxtApp();
+let mm;
 
 onMounted(() => {
-  const tl = $gsap.timeline({
-    scrollTrigger: {
-      trigger: bannerRef.value,
-      start: "top 80%",
+  mm = $gsap.matchMedia();
+
+  mm.add(
+    {
+      sm: "(min-width: 366px) and (max-width: 480px)",
+      md: "(min-width: 481px) and (max-width: 1024px)",
+      lg: "(min-width: 1025px)",
     },
-  });
+    (context) => {
+      const { sm, lg } = context.conditions;
 
-  tl.from(mainImg.value, {
-    y: 100,
-    ease: "none",
-  }).to(mainImg.value, {
-    clipPath: "circle(30% at 50% 50%)",
-    ease: "none",
-  });
+      const tl = $gsap.timeline({
+        scrollTrigger: {
+          trigger: mainImg.value,
+          start: "top 80%",
+          end: "center 80%",
+          scrub: true,
+          toggleActions: "play none none reverse",
+        },
+      });
 
-  const tl2 = $gsap.timeline({
-    scrollTrigger: {
-      trigger: pattern.value,
-      start: "top center",
-      toggleActions: "play none none reverse",
+      tl.from(mainImg.value, {
+        y: sm ? 100 : 200,
+      }).to(mainImg.value, {
+        clipPath: sm ? "circle(40% at 50% 30%)" : "circle(30% at 50% 50%)",
+      });
+
+      const tl2 = $gsap.timeline({
+        scrollTrigger: {
+          trigger: contentRef.value,
+          start: sm ? "top 40%" : "top top",
+          end: () => "+=" + bannerRef.value.offsetHeight * 2,
+          pin: true,
+          pinSpacing: true,
+          scrub: true,
+        },
+      });
+
+      tl2.to(mainImg.value, {
+        clipPath: sm ? "circle(80% at 50% 35%)" : "circle(80% at 50% 45%)",
+      });
+
+      lg &&
+        tl2
+          .from(cardsRef.value, {
+            xPercent: lg ? 100 : 0,
+          })
+          .from(
+            cardsRef.value.querySelectorAll(".card"),
+            {
+              xPercent: lg ? 100 : 0,
+              stagger: 0.2,
+              ease: "power3.out",
+            },
+            "<",
+          );
+
+      sm &&
+        tl2
+          .from(cardsRef.value, {
+            yPercent: lg ? 100 : 0,
+          })
+          .from(
+            cardsRef.value.querySelectorAll(".card"),
+            {
+              xPercent: lg ? 100 : 0,
+              stagger: 0.2,
+              ease: "power3.out",
+            },
+            "<",
+          );
     },
-  });
-
-  tl2.to(mainImg.value, {
-    clipPath: "circle(100% at 50% 50%)",
-    duration: 1.45,
-    ease: "none",
-  });
+  );
 });
 </script>
 
@@ -44,14 +92,7 @@ onMounted(() => {
       subtitle="We partner with leading global fashion brands to deliver premium garments, from initial concept through to final production, with precision, responsibility, and long-term value."
     />
 
-    <div class="banner" ref="bannerRef">
-      <img
-        src="~/assets/images/whatwedo.jpg"
-        alt="What We Do Banner"
-        class="main-img"
-        ref="mainImg"
-      />
-
+    <div class="content" ref="contentRef">
       <div class="pattern" ref="pattern">
         <img
           src="~/assets/images/pattern1.png"
@@ -59,48 +100,205 @@ onMounted(() => {
           alt="Pattern"
         />
       </div>
+
+      <div class="banner" ref="bannerRef">
+        <img
+          src="~/assets/images/whatwedo.jpg"
+          alt="What We Do Banner"
+          class="main-img"
+          ref="mainImg"
+        />
+      </div>
+
+      <div class="cards container" ref="cardsRef">
+        <div class="card">
+          <span class="serial">01</span>
+          <h2 class="card-title">Design and Innovation</h2>
+          <span class="card-subtitle"
+            >Design studios across the UK, Europe, and Bangladesh translate
+            global trends into refined, commercially precise collections. We
+            collaborate closely with our partners to create garments that
+            balance creativity, performance, and market relevance.</span
+          >
+        </div>
+        <div class="card">
+          <span class="serial">01</span>
+          <h2 class="card-title">Design and Innovation</h2>
+          <span class="card-subtitle"
+            >Design studios across the UK, Europe, and Bangladesh translate
+            global trends into refined, commercially precise collections. We
+            collaborate closely with our partners to create garments that
+            balance creativity, performance, and market relevance.</span
+          >
+        </div>
+        <div class="card">
+          <span class="serial">01</span>
+          <h2 class="card-title">Design and Innovation</h2>
+          <span class="card-subtitle"
+            >Design studios across the UK, Europe, and Bangladesh translate
+            global trends into refined, commercially precise collections. We
+            collaborate closely with our partners to create garments that
+            balance creativity, performance, and market relevance.</span
+          >
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .what-we-do {
+  overflow: hidden;
+}
+.content {
   width: 100%;
+  height: 60vh;
+  position: relative;
+  @include clamp-property("margin-top", 2.17, 4.38);
+  @include flex(center, end);
 
-  .banner {
-    position: relative;
-    @include clamp-property("margin-top", 16, 62);
+  @media screen and (min-width: 1024px) {
+    height: 100vh;
+    overflow: hidden;
+  }
 
-    @include clamp-property("margin-top", 2.17, 4.38);
-    @include flex(center, center);
+  .pattern {
+    width: 100%;
+    background-color: $base;
 
-    @media screen and (min-width: 1024px) {
-      height: auto;
-    }
+    @include clamp-property("height", 15, 37.5);
 
-    .main-img {
-      clip-path: circle(25% at 50% 50%);
+    .pattern-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+  }
 
-    .pattern {
-      position: absolute;
-      bottom: 0;
-      left: 0;
+  .banner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+
+    .main-img {
       width: 100%;
-      height: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: $base;
-      z-index: -1;
+      min-height: 100%;
+      object-fit: cover;
+      clip-path: circle(30% at 50% 40%);
 
-      .pattern-img {
+      transform: translate(-50%, -50%);
+    }
+
+    @media screen and (min-width: 1024px) {
+      height: 100vh;
+      .main-img {
+        clip-path: circle(25% at 50% 45%);
+        height: 100%;
+      }
+    }
+  }
+
+  .cards {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    gap: 2rem;
+    z-index: 5;
+
+    @media screen and (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      background: $shade-2;
+      font-family: $montserrat;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+
+      @include clamp-property("height", 18.75, 38.75);
+      @include clamp-property("border-radius", 0.75, 1.5);
+      @include clamp-property("padding-inline", 1, 2.75);
+      @include clamp-property("padding-block-start", 1.5, 2.5);
+      @include clamp-property("padding-block-end", 1.5, 4);
+
+      .serial {
+        display: inline-block;
+        color: $white;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 100%; /* 6rem */
+        text-transform: uppercase;
+        transition: all 0.45s ease;
+
+        @include clamp-property("margin-bottom", 1.5, 20.75);
+        @include clamp-property("font-size", 2.25, 6);
+        @include clamp-property("letter-spacing", -0.1125, -0.3);
+      }
+
+      .card-title {
+        color: $white;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 110%; /* 2.75rem */
+        text-transform: uppercase;
+        transition: all 0.45s ease;
+        font-family: $montserrat;
+
+        @include clamp-property("font-size", 1.5, 2.5);
+        @include clamp-property("margin-bottom", 1, 7.5);
+      }
+
+      .card-subtitle {
+        color: $light;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        opacity: 0.8;
+        @include clamp-property("font-size", 0.875, 1);
+        @include clamp-property("letter-spacing", 0.0175, -0.02);
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        background: $shade-2;
+        z-index: -1;
+        clip-path: inset(100% 0 0 0);
+        transition: clip-path 0.45s ease-in-out;
+      }
+
+      &:hover {
+        .serial {
+          color: $light;
+          @include clamp-property("margin-bottom", 1.5, 8);
+        }
+        .card-title {
+          color: $light;
+          @include clamp-property("margin-bottom", 1, 1.5);
+        }
+      }
+
+      &:hover:after {
+        clip-path: inset(0% 0 0 0);
+      }
+
+      @media screen and (min-width: 1024px) {
+        background: $white;
+
+        .serial,
+        .card-title {
+          color: $black;
+        }
       }
     }
   }

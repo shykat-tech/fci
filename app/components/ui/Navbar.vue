@@ -6,7 +6,9 @@
     <div class="nav container nav-desktop">
       <img src="/svg/logo-desktop.svg" alt="FCI-logo" />
 
-      <button class="menu-btn">Menu</button>
+      <button class="primary-btn">
+        <span data-content="Menu">Menu</span>
+      </button>
     </div>
 
     <div class="nav container nav-mobile">
@@ -62,19 +64,6 @@
 
 .nav-desktop {
   display: none;
-
-  .menu-btn {
-    font-family: $montserrat;
-    color: $light;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: normal;
-    padding-block: 1rem;
-    padding-inline: 2rem;
-    border-radius: 6.1875rem;
-    border: 1px solid $light-50;
-    background-color: transparent;
-  }
 }
 
 .nav-mobile {

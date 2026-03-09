@@ -1,0 +1,294 @@
+{
+  "id": 3,
+  "meta": {
+    "type": "home.HomePage",
+    "detail_url": "http://localhost:8000/api/v2/pages/3/",
+    "html_url": null,
+    "slug": "home",
+    "show_in_menus": false,
+    "seo_title": "",
+    "search_description": "",
+    "first_published_at": "2026-02-26T04:30:56.189000Z",
+    "alias_of": null,
+    "parent": null
+  },
+  "title": "Home",
+  "body": [
+    {
+      "type": "hero",
+      "value": {
+        "title": "Design Engineer Deliver",
+        "subtitle": "An ongoing dialogue between\r\ncreativity and craftsmanship, shaped\r\ninto garments made to be lived in.",
+        "background_image": {
+          "id": 1,
+          "alt": "fci-hero",
+          "width": 1536,
+          "height": 1024,
+          "renditions": {
+            "original": "/media/images/fci-hero.2e16d0ba.fill-1600x900.format-webp.webp",
+            "mobile": "/media/images/fci-hero.2e16d0ba.fill-400x300.format-webp.webp"
+          }
+        }
+      },
+      "id": "f8d19269-7d51-43e2-b81f-1fef5507be88"
+    },
+    {
+      "type": "what_we_do",
+      "value": {
+        "title": "What We Do",
+        "subtitle": "We partner with leading global fashion brands to deliver premium garments, from initial concept through to final production, with precision, responsibility, and long-term value.",
+        "image": {
+          "id": 2,
+          "alt": "what we do",
+          "width": 4096,
+          "height": 2736,
+          "renditions": {
+            "original": "/media/images/481ed5edb4c7278e124.2e16d0ba.fill-1920x1080.format-webp.webp",
+            "desktop": "/media/images/481ed5edb4c7278e1243.2e16d0ba.fill-1200x800.format-webp.webp",
+            "tablet": "/media/images/481ed5edb4c7278e1243c.2e16d0ba.fill-768x512.format-webp.webp",
+            "mobile": "/media/images/481ed5edb4c7278e1243c.2e16d0ba.fill-480x320.format-webp.webp"
+          }
+        },
+        "work_areas": [
+          {
+            "title": "Design and Innovation",
+            "description": "Design studios across the UK, Europe, and Bangladesh translate global trends into refined, commercially precise collections. We collaborate closely with our partners to create garments that balance creativity, performance, and market relevance."
+          },
+          {
+            "title": "Global Sourcing",
+            "description": "Design studios across the UK, Europe, and Bangladesh translate global trends into refined, commercially precise collections. We collaborate closely with our partners to create garments that balance creativity, performance, and market relevance."
+          },
+          {
+            "title": "Development & Manufacturing",
+            "description": "Design studios across the UK, Europe, and Bangladesh translate global trends into refined, commercially precise collections. We collaborate closely with our partners to create garments that balance creativity, performance, and market relevance."
+          }
+        ]
+      },
+      "id": "bc7a5e9b-6fa9-457a-a733-cba97f4f1609"
+    },
+    {
+      "type": "our_collection",
+      "value": {
+        "title": "Our collection",
+        "subtitle": "We develop premium apparel through design led sourcing and responsible manufacturing, delivering technical precision and scalable global production.",
+        "collections": [
+          {
+            "title": "WoMen's Wear",
+            "description": "Refined womenswear combining contemporary silhouettes with technical precision. Designed to balance elegance, fit, and scalable manufacturing excellence.",
+            "image": {
+              "id": 3,
+              "alt": "women",
+              "width": 2000,
+              "height": 1333,
+              "renditions": {
+                "original": "/media/images/women.2e16d0ba.fill-1920x1080.format-webp.webp",
+                "desktop": "/media/images/women.2e16d0ba.fill-1200x800.format-webp.webp",
+                "tablet": "/media/images/women.2e16d0ba.fill-768x512.format-webp.webp",
+                "mobile": "/media/images/women.2e16d0ba.fill-480x320.format-webp.webp"
+              }
+            }
+          },
+          {
+            "title": "Men's Wear",
+            "description": "Modern menswear designed for structure, comfort, and versatility. Crafted with precise tailoring, quality fabrics, and production standards suited for global fashion markets.",
+            "image": {
+              "id": 4,
+              "alt": "men",
+              "width": 1600,
+              "height": 2000,
+              "renditions": {
+                "original": "/media/images/men.2e16d0ba.fill-1920x1080.format-webp.webp",
+                "desktop": "/media/images/men.2e16d0ba.fill-1200x800.format-webp.webp",
+                "tablet": "/media/images/men.2e16d0ba.fill-768x512.format-webp.webp",
+                "mobile": "/media/images/men.2e16d0ba.fill-480x320.format-webp.webp"
+              }
+            }
+          },
+          {
+            "title": "Fabric",
+            "description": "Curated fabric collections developed with a focus on quality, performance, and responsible sourcing. Supporting diverse apparel applications with consistent standards and scalable supply.",
+            "image": {
+              "id": 5,
+              "alt": "fabric",
+              "width": 2000,
+              "height": 1367,
+              "renditions": {
+                "original": "/media/images/fabric.2e16d0ba.fill-1920x1080.format-webp.webp",
+                "desktop": "/media/images/fabric.2e16d0ba.fill-1200x800.format-webp.webp",
+                "tablet": "/media/images/fabric.2e16d0ba.fill-768x512.format-webp.webp",
+                "mobile": "/media/images/fabric.2e16d0ba.fill-480x320.format-webp.webp"
+              }
+            }
+          }
+        ]
+      },
+      "id": "c75b163a-72ca-42c9-9a45-fded0107af4b"
+    },
+    {
+      "type": "why_us",
+      "value": {
+        "title": "Where design intention meets manufacturing precision",
+        "subtitle": "A design-led manufacturing group shaping premium apparel through craft, technology, and responsible production. Connecting British heritage with advanced global manufacturing capability.",
+        "stats": [
+          {
+            "label": "Production Facilities",
+            "value": "06"
+          },
+          {
+            "label": "People Across our Group",
+            "value": "10000+"
+          },
+          {
+            "label": "Annual Turnover",
+            "value": "$200M+"
+          },
+          {
+            "label": "Annual Production Capacity",
+            "value": "25M+"
+          }
+        ]
+      },
+      "id": "b417c1c1-51ce-4778-9197-11b2e5d1a810"
+    },
+    {
+      "type": "sustainability",
+      "value": {
+        "title": "Shaping progress responsibly.",
+        "subtitle": "We are  actively engaged  in reducing the impact of garment manufacturing on people and the planet. Our commitment to the environment goes hand in hand with our vision for growth.",
+        "image": {
+          "id": 6,
+          "alt": "Sustainability",
+          "width": 2000,
+          "height": 1333,
+          "renditions": {
+            "original": "/media/images/Sustainability.2e16d0ba.fill-1920x1080.format-webp.webp",
+            "desktop": "/media/images/Sustainability.2e16d0ba.fill-1200x800.format-webp.webp",
+            "tablet": "/media/images/Sustainability.2e16d0ba.fill-768x512.format-webp.webp",
+            "mobile": "/media/images/Sustainability.2e16d0ba.fill-480x320.format-webp.webp"
+          }
+        },
+        "statistics": [
+          {
+            "label": "Annual energy consumption",
+            "value": "147,289,629.6 MJ"
+          },
+          {
+            "label": "Annual water usage",
+            "value": "417,727 m³"
+          },
+          {
+            "label": "Annual waste generated",
+            "value": "1,896 tons"
+          },
+          {
+            "label": "Greenhouse gas emissions",
+            "value": "14,018 tons CO₂e"
+          }
+        ]
+      },
+      "id": "ff2fb2be-8f63-4bf7-a452-afdf423d4cbd"
+    },
+    {
+      "type": "customers",
+      "value": {
+        "title": "A trusted partner to global brands.",
+        "subtitle": "FCI’s strength lies in their ability to balance design integrity, operational excellence, and responsible manufacturing.",
+        "partners": [
+          {
+            "id": 25,
+            "alt": "higg-index-logo-vector-black 1",
+            "width": 96,
+            "height": 48,
+            "renditions": {
+              "original": "/media/images/higg-index-logo-vec.2e16d0ba.fill-1920x1080.format-webp.webp",
+              "desktop": "/media/images/higg-index-logo-vect.2e16d0ba.fill-1200x800.format-webp.webp",
+              "tablet": "/media/images/higg-index-logo-vecto.2e16d0ba.fill-768x512.format-webp.webp",
+              "mobile": "/media/images/higg-index-logo-vecto.2e16d0ba.fill-480x320.format-webp.webp"
+            }
+          },
+          {
+            "id": 8,
+            "alt": "image 27",
+            "width": 96,
+            "height": 40,
+            "renditions": {
+              "original": "/media/images/image_27.2e16d0ba.fill-1920x1080.format-webp.webp",
+              "desktop": "/media/images/image_27.2e16d0ba.fill-1200x800.format-webp.webp",
+              "tablet": "/media/images/image_27.2e16d0ba.fill-768x512.format-webp.webp",
+              "mobile": "/media/images/image_27.2e16d0ba.fill-480x320.format-webp.webp"
+            }
+          }
+        ]
+      },
+      "id": "a5200945-ed51-4b7c-952a-2dcfc3b2dab5"
+    },
+    {
+      "type": "testimonials",
+      "value": {
+        "title": "What our clients say about us?",
+        "subtitle": "",
+        "testimonials": [
+          {
+            "name": "Md. Anisur Rahman",
+            "designation": "Director of H&M",
+            "avatar": {
+              "id": 10,
+              "alt": "Ellipse 1",
+              "width": 80,
+              "height": 80,
+              "renditions": {
+                "original": "/media/images/Ellipse_1.2e16d0ba.fill-1920x1080.format-webp.webp",
+                "desktop": "/media/images/Ellipse_1.2e16d0ba.fill-1200x800.format-webp.webp",
+                "tablet": "/media/images/Ellipse_1.2e16d0ba.fill-768x512.format-webp.webp",
+                "mobile": "/media/images/Ellipse_1.2e16d0ba.fill-480x320.format-webp.webp"
+              }
+            },
+            "company_logo": {
+              "id": 11,
+              "alt": "Group 18",
+              "width": 80,
+              "height": 80,
+              "renditions": {
+                "original": "/media/images/Group_18.2e16d0ba.fill-1920x1080.format-webp.webp",
+                "desktop": "/media/images/Group_18.2e16d0ba.fill-1200x800.format-webp.webp",
+                "tablet": "/media/images/Group_18.2e16d0ba.fill-768x512.format-webp.webp",
+                "mobile": "/media/images/Group_18.2e16d0ba.fill-480x320.format-webp.webp"
+              }
+            },
+            "quote": "FCI consistently delivers a rare balance of design understanding, manufacturing discipline, and responsible production. Their ability to scale while maintaining quality makes them a trusted long-term partner."
+          },
+          {
+            "name": "Amit Richard",
+            "designation": "CEO of COdesign",
+            "avatar": {
+              "id": 12,
+              "alt": "1711364139449",
+              "width": 200,
+              "height": 200,
+              "renditions": {
+                "original": "/media/images/1711364139449.2e16d0ba.fill-1920x1080.format-webp.webp",
+                "desktop": "/media/images/1711364139449.2e16d0ba.fill-1200x800.format-webp.webp",
+                "tablet": "/media/images/1711364139449.2e16d0ba.fill-768x512.format-webp.webp",
+                "mobile": "/media/images/1711364139449.2e16d0ba.fill-480x320.format-webp.webp"
+              }
+            },
+            "company_logo": {
+              "id": 13,
+              "alt": "images",
+              "width": 225,
+              "height": 225,
+              "renditions": {
+                "original": "/media/images/images.2e16d0ba.fill-1920x1080.format-webp.webp",
+                "desktop": "/media/images/images.2e16d0ba.fill-1200x800.format-webp.webp",
+                "tablet": "/media/images/images.2e16d0ba.fill-768x512.format-webp.webp",
+                "mobile": "/media/images/images.2e16d0ba.fill-480x320.format-webp.webp"
+              }
+            },
+            "quote": "FCI consistently delivers a rare balance of design understanding, manufacturing discipline, and responsible production."
+          }
+        ]
+      },
+      "id": "97048222-79bd-4321-a397-2688461f786f"
+    }
+  ]
+}
