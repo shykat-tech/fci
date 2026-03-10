@@ -104,7 +104,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .sustainability {
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: $base;
   position: relative;
 

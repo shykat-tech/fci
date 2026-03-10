@@ -44,7 +44,7 @@ onMounted(() => {
 
     tl.from(titleRef.value, { opacity: 0, y: 100 })
       .from(subtitleRef.value, { opacity: 0, y: 150 }, "-=0.2")
-      .from(headingRef.value, { opacity: 0, y: -50 }, "-=0.2");
+      .from(headingRef.value, { opacity: 0, y: -50 }, "<");
   }, sectionTitleRef);
 
   onUnmounted(() => ctx.revert());

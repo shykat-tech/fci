@@ -23,7 +23,7 @@ onMounted(() => {
       const tl = $gsap.timeline({
         scrollTrigger: {
           trigger: mainImg.value,
-          start: "top 80%",
+          start: sm ? "-30% 80%" : "top 80%",
           end: "center 80%",
           scrub: true,
           toggleActions: "play none none reverse",
@@ -31,7 +31,7 @@ onMounted(() => {
       });
 
       tl.from(mainImg.value, {
-        y: sm ? 50 : 200,
+        y: sm ? -200 : 200,
       }).to(mainImg.value, {
         clipPath: sm ? "circle(35% at 50% 30%)" : "circle(30% at 50% 50%)",
       });
@@ -122,8 +122,8 @@ onMounted(() => {
           >
         </div>
         <div class="card">
-          <span class="serial">01</span>
-          <h2 class="card-title">Design and Innovation</h2>
+          <span class="serial">02</span>
+          <h2 class="card-title">Global Sourcing</h2>
           <span class="card-subtitle"
             >Design studios across the UK, Europe, and Bangladesh translate
             global trends into refined, commercially precise collections. We
@@ -132,8 +132,8 @@ onMounted(() => {
           >
         </div>
         <div class="card">
-          <span class="serial">01</span>
-          <h2 class="card-title">Design and Innovation</h2>
+          <span class="serial">03</span>
+          <h2 class="card-title">Development & Manufacturing</h2>
           <span class="card-subtitle"
             >Design studios across the UK, Europe, and Bangladesh translate
             global trends into refined, commercially precise collections. We

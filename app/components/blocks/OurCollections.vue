@@ -8,9 +8,27 @@
     />
 
     <div class="content">
-      <CollectionHomeCollection />
-      <CollectionHomeCollection align="left" img="/men-col.png" />
-      <CollectionHomeCollection img="/Fabric.png" />
+      <CollectionHomeCollection
+        :data="{
+          title: `WoMen's Wear`,
+          subtitle: `Refined womenswear combining contemporary silhouettes with technical precision. Designed to balance elegance, fit, and scalable manufacturing excellence.`,
+        }"
+      />
+      <CollectionHomeCollection
+        align="left"
+        img="/men-col.png"
+        :data="{
+          title: `Men's Wear`,
+          subtitle: `Modern menswear designed for structure, comfort, and versatility. Crafted with precise tailoring, quality fabrics, and production standards suited for global fashion markets.`,
+        }"
+      />
+      <CollectionHomeCollection
+        img="/Fabric.png"
+        :data="{
+          title: `Fabric`,
+          subtitle: `Curated fabric collections developed with a focus on quality, performance, and responsible sourcing. Supporting diverse apparel applications with consistent standards and scalable supply.`,
+        }"
+      />
     </div>
   </div>
 </template>

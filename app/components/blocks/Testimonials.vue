@@ -31,14 +31,20 @@ const prevSlide = async () => {
 };
 
 const goToSlide = async (index: number, dir: "next" | "prev") => {
-  const slide = sliderContainer.value?.querySelectorAll(".slide");
-  if (!sliderContainer.value || !slide[0]) return;
+  const slideNodeList =
+    sliderContainer.value?.querySelectorAll<HTMLElement>(".slide");
+  if (!sliderContainer.value || !slideNodeList || slideNodeList.length === 0)
+    return;
 
-  const activeSlide = slide[index];
-  const activeProfileCol = activeSlide?.querySelector(".profile-col");
-  const activeQuoteCol = activeSlide?.querySelector(".quote-col");
+  // Convert NodeList to array so we can safely access by index
+  const slideArray = Array.from(slideNodeList);
 
-  const slideWidth = slide[0].offsetWidth;
+  const activeSlide = slideArray[index];
+  const activeProfileCol =
+    activeSlide?.querySelector<HTMLElement>(".profile-col");
+  const activeQuoteCol = activeSlide?.querySelector<HTMLElement>(".quote-col");
+
+  const slideWidth = slideArray[0].offsetWidth;
   const xPos = -index * slideWidth;
 
   // Animate slider container
@@ -76,52 +82,6 @@ const goToSlide = async (index: number, dir: "next" | "prev") => {
         },
         "-=0.7",
       );
-  }
-};
-
-const _goToSlide = (index: number, dir: "next" | "prev") => {
-  if (!sliderContainer.value || !slide.value[index]) return;
-
-  const activeSlide = slide.value[index];
-  const profileCol = activeSlide.querySelector(".profile-col");
-  const quoteCol = activeSlide.querySelector(".quote-col");
-
-  const slideWidth = slide.value[0].offsetWidth;
-  const xPos = -index * slideWidth;
-
-  // Animate slider container
-  $gsap.to(sliderContainer.value, {
-    x: xPos,
-    duration: 0.5,
-    ease: "power3.out",
-  });
-
-  if (profileCol && quoteCol) {
-    const tl = $gsap.timeline();
-    tl.from(profileCol, {
-      yPercent: dir === "next" ? 50 : -50,
-      opacity: 0,
-      duration: 0.4,
-      ease: "power2.out",
-    }).from(
-      quoteCol,
-      {
-        yPercent: dir === "next" ? 50 : -50,
-        opacity: 0,
-        duration: 0.4,
-        ease: "power2.out",
-      },
-      "-=0.3",
-    );
-  }
-
-  // Animate progress bar
-  if (progressRef.value) {
-    $gsap.to(progressRef.value, {
-      width: ((index + 1) / slides.value.length) * 100 + "%",
-      duration: 0.5,
-      ease: "power2.out",
-    });
   }
 };
 

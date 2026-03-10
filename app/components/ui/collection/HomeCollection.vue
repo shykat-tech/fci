@@ -1,10 +1,20 @@
 <script setup lang="ts">
-const { align = "right" } = defineProps({
+const {
+  align = "right",
+  img,
+  data,
+} = defineProps({
   align: {
     type: String as () => "left" | "right",
   },
   img: {
     type: String,
+  },
+  data: {
+    type: Object as () => {
+      title: String;
+      subtitle: String;
+    },
   },
 });
 
@@ -72,7 +82,7 @@ const hideCursor = () => {
   >
     <div class="left-col">
       <h2>
-        <span>Women's Wear</span>
+        <span>{{ data?.title }}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -105,9 +115,7 @@ const hideCursor = () => {
         </svg>
       </h2>
       <p>
-        Refined women's wear combining contemporary silhouettes with technical
-        precision. Designed to balance elegance, fit, and scalable manufacturing
-        excellence.
+        {{ data?.subtitle }}
       </p>
     </div>
 

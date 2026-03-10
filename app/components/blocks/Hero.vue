@@ -14,105 +14,130 @@ const header = ref<HTMLDivElement | null>(null);
 const subtitle = ref<HTMLHeadingElement | null>(null);
 
 const { $gsap } = useNuxtApp();
+let mm;
 
 onMounted(() => {
-  const titleSpans = titleRef.value?.querySelectorAll(
-    "span",
-  ) as NodeListOf<HTMLSpanElement>;
+  mm = $gsap.matchMedia();
 
-  const tl = $gsap.timeline({
-    defaults: {
-      duration: 0.6,
-    },
-  });
-
-  tl.fromTo(
-    bannerRef.value,
+  mm.add(
     {
-      scale: 1.5,
+      sm: "(min-width: 366px) and (max-width: 480px)",
+      md: "(min-width: 481px) and (max-width: 1024px)",
+      lg: "(min-width: 1025px)",
     },
-    {
-      scale: 1.1,
-      ease: "power3.inOut",
-      duration: 1.5,
-    },
-  )
-    .from(
-      "#navbar",
-      {
-        y: -100,
-        opacity: 1,
-      },
-      "-=0.5",
-    )
-    .from(
-      titleSpans[1],
-      {
-        y: 100,
-        opacity: 0,
-      },
-      "<",
-    )
-    .from(
-      titleSpans[0],
-      {
-        x: -200,
-        opacity: 0,
-      },
-      "-=0.5",
-    )
-    .from(
-      titleSpans[2],
-      {
-        x: 200,
-        opacity: 0,
-      },
-      "<",
-    )
-    .from(
-      downBtn.value,
-      {
-        y: 100,
-        opacity: 0,
-      },
-      "-=0.5",
-    );
+    (context) => {
+      const { sm, lg } = context.conditions;
 
-  const tl2 = $gsap.timeline({
-    scrollTrigger: {
-      trigger: header.value,
-      start: "5% top",
-      toggleActions: "play none none reverse",
-    },
-  });
+      const titleSpans = titleRef.value?.querySelectorAll(
+        "span",
+      ) as NodeListOf<HTMLSpanElement>;
 
-  tl2
-    .to(bannerRef.value, {
-      scale: 1,
-      ease: "none",
-    })
-    .fromTo(
-      subtitle.value,
-      {
-        y: 200,
-        opacity: 0,
-        ease: "none",
-      },
-      {
-        y: 0,
-        opacity: 1,
-        ease: "none",
-      },
-      "<",
-    )
-    .to(
-      titleSpans[1],
-      {
-        marginTop: "0.25rem",
-        marginBottom: "0.25rem",
-      },
-      "<",
-    );
+      const tl = $gsap.timeline({
+        defaults: {
+          duration: 0.6,
+        },
+      });
+
+      tl.fromTo(
+        bannerRef.value,
+        {
+          scale: 1.5,
+        },
+        {
+          scale: 1.1,
+          ease: "power3.inOut",
+          duration: 1.5,
+        },
+      )
+        .from(
+          "#navbar",
+          {
+            y: -100,
+            opacity: 1,
+          },
+          "-=0.5",
+        )
+        .from(
+          titleSpans[1],
+          {
+            y: 100,
+            opacity: 0,
+          },
+          "<",
+        )
+        .from(
+          titleSpans[0],
+          {
+            x: sm ? 0 : -200,
+            y: sm ? 50 : 0,
+            opacity: 0,
+          },
+          sm ? "<" : "-=0.5",
+        )
+        .from(
+          titleSpans[2],
+          {
+            x: sm ? 0 : 200,
+            y: sm ? 150 : 0,
+            opacity: 0,
+          },
+          "<",
+        )
+        .from(
+          downBtn.value,
+          {
+            y: 100,
+            opacity: 0,
+          },
+          "-=0.5",
+        )
+        .from(
+          subtitle.value,
+          {
+            y: sm ? 150 : 0,
+            opacity: 0,
+          },
+          "<",
+        );
+
+      const tl2 = $gsap.timeline({
+        scrollTrigger: {
+          trigger: header.value,
+          start: "5% top",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      lg &&
+        tl2
+          .to(bannerRef.value, {
+            scale: 1,
+            ease: "none",
+          })
+          .fromTo(
+            subtitle.value,
+            {
+              y: 200,
+              opacity: 0,
+              ease: "none",
+            },
+            {
+              y: 0,
+              opacity: 1,
+              ease: "none",
+            },
+            "<",
+          )
+          .to(
+            titleSpans[1],
+            {
+              marginTop: "0.25rem",
+              marginBottom: "0.25rem",
+            },
+            "<",
+          );
+    },
+  );
 });
 </script>
 
@@ -255,7 +280,7 @@ onMounted(() => {
       letter-spacing: -0.025rem;
       // @include clamp-property("margin-top", 1.5, 5);
       @include clamp-property("font-size", 1.125, 1.25);
-      opacity: 0;
+      // opacity: 0;
 
       @media screen and (min-width: 1024px) {
         margin-top: 2rem;
