@@ -6,12 +6,12 @@ const slides = ref([
   { id: 1, name: "John Doe", text: "Great service! Highly recommend." },
   { id: 2, name: "Jane Smith", text: "Amazing experience, very professional." },
   { id: 3, name: "Alice Johnson", text: "Exceeded our expectations!" },
-  { id: 4, name: "Shykat Johnson", text: "Exceeded our expectations!" },
+  { id: 4, name: "Galli Johnson", text: "Exceeded our expectations!" },
 ]);
 
 const currentIndex = ref(0);
 const sliderContainer = ref<HTMLElement | null>(null);
-const slide = ref<HTMLElement | null>(null);
+
 const progressRef = ref<HTMLElement | null>(null);
 
 const nextSlide = async () => {
@@ -31,13 +31,14 @@ const prevSlide = async () => {
 };
 
 const goToSlide = async (index: number, dir: "next" | "prev") => {
-  if (!sliderContainer.value || !slide.value[0]) return;
+  const slide = sliderContainer.value?.querySelectorAll(".slide");
+  if (!sliderContainer.value || !slide[0]) return;
 
-  const activeSlide = slide.value[index];
+  const activeSlide = slide[index];
   const activeProfileCol = activeSlide?.querySelector(".profile-col");
   const activeQuoteCol = activeSlide?.querySelector(".quote-col");
 
-  const slideWidth = slide.value[0].offsetWidth;
+  const slideWidth = slide[0].offsetWidth;
   const xPos = -index * slideWidth;
 
   // Animate slider container
@@ -78,6 +79,52 @@ const goToSlide = async (index: number, dir: "next" | "prev") => {
   }
 };
 
+const _goToSlide = (index: number, dir: "next" | "prev") => {
+  if (!sliderContainer.value || !slide.value[index]) return;
+
+  const activeSlide = slide.value[index];
+  const profileCol = activeSlide.querySelector(".profile-col");
+  const quoteCol = activeSlide.querySelector(".quote-col");
+
+  const slideWidth = slide.value[0].offsetWidth;
+  const xPos = -index * slideWidth;
+
+  // Animate slider container
+  $gsap.to(sliderContainer.value, {
+    x: xPos,
+    duration: 0.5,
+    ease: "power3.out",
+  });
+
+  if (profileCol && quoteCol) {
+    const tl = $gsap.timeline();
+    tl.from(profileCol, {
+      yPercent: dir === "next" ? 50 : -50,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power2.out",
+    }).from(
+      quoteCol,
+      {
+        yPercent: dir === "next" ? 50 : -50,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.out",
+      },
+      "-=0.3",
+    );
+  }
+
+  // Animate progress bar
+  if (progressRef.value) {
+    $gsap.to(progressRef.value, {
+      width: ((index + 1) / slides.value.length) * 100 + "%",
+      duration: 0.5,
+      ease: "power2.out",
+    });
+  }
+};
+
 onMounted(() => {
   $gsap.set(progressRef.value, {
     width: (1 / slides.value.length) * 100 + "%",
@@ -87,13 +134,12 @@ onMounted(() => {
 const currentNumRef = ref<HTMLElement | null>(null);
 
 // Watch currentIndex and animate the number
-watch(currentIndex, (newIndex, oldIndex) => {
+watch(currentIndex, () => {
   if (!currentNumRef.value) return;
 
   const currentEl = currentNumRef.value.querySelector(".current");
   if (!currentEl) return;
 
-  // Animate number change
   $gsap.fromTo(
     currentEl,
     { y: 50, opacity: 0 },
@@ -113,7 +159,7 @@ watch(currentIndex, (newIndex, oldIndex) => {
     <div class="content container">
       <div class="slider-wrapper">
         <div class="slider" ref="sliderContainer">
-          <div class="slide" ref="slide" v-for="slide in slides">
+          <div class="slide" v-for="slide in slides">
             <div class="profile-col">
               <div class="avatars">
                 <img
