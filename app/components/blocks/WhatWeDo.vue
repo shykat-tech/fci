@@ -31,15 +31,15 @@ onMounted(() => {
       });
 
       tl.from(mainImg.value, {
-        y: sm ? 100 : 200,
+        y: sm ? 50 : 200,
       }).to(mainImg.value, {
-        clipPath: sm ? "circle(40% at 50% 30%)" : "circle(30% at 50% 50%)",
+        clipPath: sm ? "circle(35% at 50% 30%)" : "circle(30% at 50% 50%)",
       });
 
       const tl2 = $gsap.timeline({
         scrollTrigger: {
           trigger: contentRef.value,
-          start: sm ? "top 40%" : "top top",
+          start: sm ? "top top" : "top top",
           end: () => "+=" + bannerRef.value.offsetHeight * 2,
           pin: true,
           pinSpacing: true,
@@ -48,7 +48,7 @@ onMounted(() => {
       });
 
       tl2.to(mainImg.value, {
-        clipPath: sm ? "circle(80% at 50% 35%)" : "circle(80% at 50% 45%)",
+        clipPath: sm ? "circle(75% at 50% 50%)" : "circle(80% at 50% 45%)",
       });
 
       lg &&
@@ -69,12 +69,12 @@ onMounted(() => {
       sm &&
         tl2
           .from(cardsRef.value, {
-            yPercent: lg ? 100 : 0,
+            yPercent: 100,
           })
           .from(
             cardsRef.value.querySelectorAll(".card"),
             {
-              xPercent: lg ? 100 : 0,
+              yPercent: 100,
               stagger: 0.2,
               ease: "power3.out",
             },
@@ -152,7 +152,7 @@ onMounted(() => {
 }
 .content {
   width: 100%;
-  height: 60vh;
+  height: 100vh;
   position: relative;
   @include clamp-property("margin-top", 2.17, 4.38);
   @include flex(center, end);
@@ -160,13 +160,19 @@ onMounted(() => {
   @media screen and (min-width: 1024px) {
     height: 100vh;
     overflow: hidden;
+
+    .pattern {
+      position: relative;
+    }
   }
 
   .pattern {
     width: 100%;
     background-color: $base;
+    // position: absolute;
+    // top: 0;
 
-    @include clamp-property("height", 15, 37.5);
+    @include clamp-property("height", 35, 37.5);
 
     .pattern-img {
       width: 100%;
@@ -187,7 +193,7 @@ onMounted(() => {
       width: 100%;
       min-height: 100%;
       object-fit: cover;
-      clip-path: circle(30% at 50% 40%);
+      clip-path: circle(25% at 50% 25%);
 
       transform: translate(-50%, -50%);
     }
@@ -205,13 +211,14 @@ onMounted(() => {
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-70%);
     display: grid;
     gap: 2rem;
     z-index: 5;
 
     @media screen and (min-width: 1024px) {
       grid-template-columns: repeat(3, 1fr);
+      transform: translateY(-50%);
     }
 
     .card {

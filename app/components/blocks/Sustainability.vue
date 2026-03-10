@@ -1,10 +1,66 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { $gsap } = useNuxtApp();
+
+// Ref
+const sustainability = ref<HTMLDivElement | null>(null);
+const watermark = ref<HTMLDivElement | null>(null);
+const leftCol = ref<HTMLDivElement | null>(null);
+const rightCol = ref<HTMLDivElement | null>(null);
+const imgContainer = ref<HTMLDivElement | null>(null);
+const imgRef = ref<HTMLImageElement | null>(null);
+
+onMounted(() => {
+  const tl = $gsap.timeline({
+    scrollTrigger: {
+      trigger: leftCol.value,
+      start: "top 80%",
+      toggleActions: "play none none reverse",
+    },
+  });
+
+  $gsap.fromTo(
+    watermark.value,
+    {
+      xPercent: 50,
+    },
+    {
+      xPercent: -60,
+      scrollTrigger: {
+        trigger: sustainability.value,
+        start: "top bottom",
+        toggleActions: "play none none reverse",
+        scrub: true,
+      },
+    },
+  );
+
+  if (imgRef.value && imgContainer.value) {
+    tl.from(leftCol.value, {
+      y: 200,
+    })
+      .from(
+        rightCol.value,
+        {
+          y: 400,
+        },
+        "<",
+      )
+      .to(
+        imgRef.value,
+        {
+          y: imgRef.value?.offsetHeight - imgContainer.value?.offsetHeight,
+        },
+        "-=0.3",
+      );
+  }
+});
+</script>
 
 <template>
-  <div class="sustainability container">
-    <div class="watermark">Sustainability</div>
+  <div class="sustainability container" ref="sustainability">
+    <div class="watermark" ref="watermark">Sustainability</div>
 
-    <div class="left-col">
+    <div class="left-col" ref="leftCol">
       <h2>Shaping progress responsibly.</h2>
       <p>
         We are actively engaged in reducing the impact of garment manufacturing
@@ -18,8 +74,10 @@
         </button>
       </NuxtLink>
     </div>
-    <div class="right-col">
-      <img src="~/assets/images/sustainability.png" alt="" />
+    <div class="right-col" ref="rightCol">
+      <div class="img-box" ref="imgContainer">
+        <img src="~/assets/images/sustainability.png" alt="" ref="imgRef" />
+      </div>
 
       <div class="stats">
         <div class="stat">
@@ -45,6 +103,8 @@
 
 <style scoped lang="scss">
 .sustainability {
+  width: 100%;
+  overflow-x: hidden;
   background-color: $base;
   position: relative;
 
@@ -78,8 +138,22 @@
   }
 
   .right-col {
-    img {
+    width: 100%;
+    .img-box {
+      overflow: hidden;
       width: 100%;
+      @include clamp-property("height", 15.75, 35);
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 120%;
+        object-fit: cover;
+
+        position: absolute;
+        bottom: 0;
+        left: 0%;
+      }
     }
 
     .stats {

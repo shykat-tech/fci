@@ -1,6 +1,4 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="loader">
@@ -35,13 +33,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 180px;
-    height: 180px;
+    width: 100%;
+    height: 100%;
     z-index: 0;
-    border-radius: 50%;
-    background: $shade-2;
+    background: url("~/assets/images/testimonials-bg.png") center/cover
+      no-repeat;
     opacity: 0.5;
-    filter: blur(80px);
     pointer-events: none;
   }
 }

@@ -80,7 +80,9 @@ onMounted(() => {
   }
   &.left {
     text-align: start;
-
+    h2 {
+      width: 100%;
+    }
     @media screen and (min-width: 1024px) {
       h2 {
         width: 75%;

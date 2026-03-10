@@ -1,16 +1,59 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { $gsap } = useNuxtApp();
+
+// Ref
+const container = ref<HTMLDivElement | null>(null);
+const customers = ref<HTMLDivElement | null>(null);
+const watermark = ref<HTMLDivElement | null>(null);
+
+onMounted(() => {
+  const tl = $gsap.timeline({
+    scrollTrigger: {
+      trigger: container.value,
+      start: "top 90%",
+      toggleActions: "play none none reverse",
+    },
+  });
+
+  $gsap.fromTo(
+    watermark.value,
+    {
+      xPercent: 50,
+    },
+    {
+      xPercent: -60,
+      scrollTrigger: {
+        trigger: customers.value,
+        start: "top bottom",
+        toggleActions: "play none none reverse",
+        scrub: true,
+      },
+    },
+  );
+
+  const el = container.value?.querySelectorAll(".box");
+
+  if (el) {
+    tl.from(el, {
+      y: 50,
+      opacity: 0,
+      stagger: 0.1,
+    });
+  }
+});
+</script>
 
 <template>
-  <div class="customers">
+  <div class="customers" ref="customers">
     <SectionTitle
       heading="Our customers"
       title="A trusted partner to global brands."
       subtitle="FCI’s strength lies in their ability to balance design integrity, operational excellence, and responsible manufacturing."
     />
 
-    <div class="watermark">Clients</div>
+    <div class="watermark" ref="watermark">Clients</div>
 
-    <div class="clients-logo container">
+    <div class="clients-logo container" ref="container">
       <div class="box">
         <img src="~/assets/images/c3.png" alt="" />
       </div>

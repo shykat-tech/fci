@@ -1,4 +1,27 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { $gsap } = useNuxtApp();
+
+// Ref
+const statContainer = ref<HTMLDivElement | null>(null);
+
+onMounted(() => {
+  const tl = $gsap.timeline({
+    scrollTrigger: {
+      trigger: statContainer.value,
+      start: "top 80%",
+      scrub: true,
+      toggleActions: "play none none reverse",
+    },
+  });
+
+  tl.from(statContainer.value?.querySelectorAll(".stat"), {
+    y: 100,
+    stagger: 0.2,
+    opacity: 0,
+    ease: "power3.out",
+  });
+});
+</script>
 
 <template>
   <div class="stats">
@@ -8,7 +31,7 @@
       subtitle="A design-led manufacturing group shaping premium apparel through craft, technology, and responsible production. Connecting British heritage with advanced global manufacturing capability."
     />
 
-    <div class="content container">
+    <div class="content container" ref="statContainer">
       <div class="stat">
         <h3 class="value">06</h3>
         <h2 class="label">Production Facilities</h2>
