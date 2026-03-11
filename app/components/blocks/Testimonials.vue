@@ -324,17 +324,6 @@ watch(currentIndex, () => {
       @include clamp-property("gap", 1, 10);
       @include clamp-property("margin-top", 3, 5);
 
-      @media screen and (min-width: 1024px) {
-        flex-direction: row;
-
-        .prev-next {
-          width: 40%;
-        }
-        .slider-info {
-          width: 55%;
-        }
-      }
-
       .prev-next {
         width: 100%;
         @include flex(start, start, row);
@@ -342,6 +331,7 @@ watch(currentIndex, () => {
         button {
           background-color: transparent;
           outline: none;
+          position: relative;
           @include clamp-property("width", 3, 3.75);
           @include clamp-property("height", 3, 3.75);
           @include flex(center, center, row);
@@ -355,13 +345,42 @@ watch(currentIndex, () => {
           svg {
             @include clamp-property("width", 0.9, 1);
             @include clamp-property("height", 0.9, 1);
+
+            path {
+              transition: stroke 0.45s ease;
+            }
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: $base;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.45s ease;
+            z-index: -1;
+          }
+
+          &:hover {
+            svg path {
+              stroke: $white;
+            }
+
+            &::after {
+              transform: scale(1);
+              opacity: 1;
+            }
           }
         }
       }
 
       .slider-info {
         width: 100%;
-
         .counter {
           text-align: end;
           @include flex(end, end);
@@ -413,9 +432,18 @@ watch(currentIndex, () => {
           }
         }
       }
-    }
 
-    /* Progress & counter */
+      @media screen and (min-width: 1024px) {
+        flex-direction: row;
+
+        .prev-next {
+          width: 40%;
+        }
+        .slider-info {
+          width: 55%;
+        }
+      }
+    }
   }
 }
 

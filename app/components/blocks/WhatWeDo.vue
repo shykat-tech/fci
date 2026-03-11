@@ -169,10 +169,8 @@ onMounted(() => {
   .pattern {
     width: 100%;
     background-color: $base;
-    // position: absolute;
-    // top: 0;
 
-    @include clamp-property("height", 35, 37.5);
+    @include clamp-property("height", 35, 32.5);
 
     .pattern-img {
       width: 100%;
