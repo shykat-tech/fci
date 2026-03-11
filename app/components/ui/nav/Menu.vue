@@ -14,8 +14,8 @@ const menuList = [
     children: null,
   },
   {
-    label: "About",
-    slug: "/about",
+    label: "What We Do",
+    slug: "/what-we-do",
     children: null,
   },
   {
@@ -114,7 +114,7 @@ const activeLink = ref<MainListType | null>(null);
           <NuxtLink
             :to="link.children ? undefined : link.slug"
             v-for="link in menuList"
-            @click="!link.children && closeMenu"
+            @click="link.children === null && closeMenu"
             class="fLink"
             :class="{
               hasLink: link.children,
@@ -313,7 +313,7 @@ const activeLink = ref<MainListType | null>(null);
       width: 100%;
       height: 100%;
       background: rgb(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
+      // backdrop-filter: blur(10px);
       top: 0;
       left: 0;
       // z-index: 1;

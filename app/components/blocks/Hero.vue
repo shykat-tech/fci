@@ -49,14 +49,14 @@ onMounted(() => {
           duration: 1.5,
         },
       )
-        .from(
-          "#navbar",
-          {
-            y: -100,
-            opacity: 1,
-          },
-          "-=0.5",
-        )
+        // .from(
+        //   "#navbar",
+        //   {
+        //     y: -100,
+        //     opacity: 1,
+        //   },
+        //   "-=0.5",
+        // )
         .from(
           titleSpans[1],
           {

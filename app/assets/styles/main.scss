@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  // outline: 1px dashed red;
 }
 
 body {
@@ -26,7 +27,8 @@ body {
   @include clamp-property("padding-inline", 1.25, 11.25);
 }
 
-.primary-btn {
+.primary-btn,
+.base-btn {
   font-family: $montserrat;
   color: $light;
   font-size: 1rem;
@@ -103,4 +105,8 @@ body {
       opacity: 1;
     }
   }
+}
+
+.base-btn {
+  background-color: $base;
 }

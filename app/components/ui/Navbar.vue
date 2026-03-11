@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const route = useRoute();
+
 const isMenuOpen = ref(false);
 
 const handleOpenMenu = () => {
@@ -14,15 +16,46 @@ const handleMenuClose = () => {
   document.body.style.position = "";
   document.body.style.width = "";
 };
+
+const navEl = ref<HTMLElement | null>(null);
+
+// onMounted(() => {
+//   console.log(navEl.value?.offsetHeight);
+//   setTimeout(() => {
+//     if (navEl.value) {
+//       document.body.style.setProperty(
+//         "--nav-height",
+//         `${navEl.value.offsetHeight}px`,
+//       );
+//     }
+//   }, 1000);
+// });
+
+onMounted(async () => {
+  await nextTick();
+  document.body.style.setProperty(
+    "--nav-height",
+    `${navEl.value.offsetHeight}px`,
+  );
+});
 </script>
 
 <template>
   <nav id="navbar">
     <!-- <WGImg image="/svg/logo.svg" alt="FCI-logo"/> -->
-    <div class="nav container nav-desktop">
-      <img src="/svg/logo-desktop.svg" alt="FCI-logo" />
+    <div class="nav container nav-desktop" ref="navEl">
+      <NuxtLink to="/"
+        ><img
+          v-if="route.path === '/'"
+          src="/svg/logo-desktop.svg"
+          alt="FCI-logo" />
+        <img v-else src="/svg/logo-dark.svg" alt="FCI-logo"
+      /></NuxtLink>
 
-      <button class="primary-btn" @click="handleOpenMenu">
+      <button
+        :class="route.path === '/' ? 'primary-btn' : 'base-btn'"
+        @click="handleOpenMenu"
+      >
         <span data-content="Menu">Menu</span>
       </button>
     </div>
@@ -60,21 +93,20 @@ const handleMenuClose = () => {
         />
       </svg>
     </div>
-
-    <!-- Desktop Menu -->
-    <Transition name="menu">
-      <div class="menu-wrapper" v-if="isMenuOpen">
-        <NavMenu @close="handleMenuClose" />
-      </div>
-    </Transition>
   </nav>
+  <!-- Desktop Menu -->
+  <Transition name="menu">
+    <div class="menu-wrapper" v-if="isMenuOpen">
+      <NavMenu @close="handleMenuClose" />
+    </div>
+  </Transition>
 </template>
 
 <style scoped lang="scss">
 #navbar {
   background-color: transparent;
   position: relative;
-  z-index: 99999;
+  z-index: 999;
 }
 .nav {
   width: 100%;
