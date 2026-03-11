@@ -9,6 +9,7 @@
 body {
   font-family: $montserrat !important;
   overflow-x: hidden;
+  scrollbar-gutter: stable;
 }
 
 .noselect {
