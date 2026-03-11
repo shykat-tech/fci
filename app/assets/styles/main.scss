@@ -5,6 +5,9 @@
   -webkit-tap-highlight-color: transparent;
   // outline: 1px dashed red;
 }
+html{
+  scrollbar-gutter: stable;
+}
 
 body {
   font-family: $montserrat !important;
