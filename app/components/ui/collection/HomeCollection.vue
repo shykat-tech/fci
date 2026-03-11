@@ -32,13 +32,21 @@ onMounted(() => {
       trigger: collectionCard.value,
       start: "top bottom",
       toggleActions: "play none none reverse",
+      scrub: true,
     },
   });
 
-  tl.from(collectionCard.value, {
+  $gsap.from(collectionCard.value, {
     y: 100,
     ease: "none",
-  }).to(
+    scrollTrigger: {
+      trigger: collectionCard.value,
+      start: "top bottom",
+      toggleActions: "play none none reverse",
+    },
+  });
+
+  tl.to(
     imgInner.value,
     {
       y: () => imgInner.value!.offsetHeight - imgContainer.value!.offsetHeight,

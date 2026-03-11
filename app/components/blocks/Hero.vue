@@ -280,9 +280,9 @@ onMounted(() => {
       letter-spacing: -0.025rem;
       // @include clamp-property("margin-top", 1.5, 5);
       @include clamp-property("font-size", 1.125, 1.25);
-      // opacity: 0;
 
       @media screen and (min-width: 1024px) {
+        opacity: 0;
         margin-top: 2rem;
         width: 26.3125rem;
       }
