@@ -56,10 +56,6 @@ type MainListType = {
 };
 
 const activeLink = ref<MainListType | null>(null);
-
-const ss = () => {
-  console.log("sdfsdf");
-};
 </script>
 
 <template>
@@ -118,7 +114,7 @@ const ss = () => {
           <NuxtLink
             :to="link.children ? undefined : link.slug"
             v-for="link in menuList"
-            @click="closeMenu"
+            @click="!link.children && closeMenu"
             class="fLink"
             :class="{
               hasLink: link.children,
