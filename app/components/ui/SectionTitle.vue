@@ -105,7 +105,7 @@ onMounted(() => {
     font-weight: 550;
     line-height: 100%; /* 6rem */
     text-transform: uppercase;
-    text-wrap: pretty;
+    text-wrap: balance;
 
     @include clamp-property("font-size", 2.25, 6);
     @include clamp-property("letter-spacing", -0.0675, -0.18);

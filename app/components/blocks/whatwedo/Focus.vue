@@ -86,8 +86,8 @@ onMounted(async () => {
       <div class="stats" v-for="(stat, i) in compData?.stats" :key="i">
         <span class="serial">{{ stat?.serial }}</span>
 
-        <div class="label">{{ stat?.title }}</div>
-        <div class="value">{{ stat?.description }}</div>
+        <div class="label">{{ stat?.title || stat?.label }}</div>
+        <div class="value">{{ stat?.description || stat?.value }}</div>
       </div>
     </div>
   </div>
