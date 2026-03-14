@@ -5,7 +5,7 @@ import { NuxtLink } from '../../../.nuxt/components';
   <footer class="container">
     <div class="topper">
       <div class="left-col">
-        <img src="/svg/logo-desktop.svg" alt="logo" class="logo" />
+        <img src="/svg/logo.svg" alt="logo" class="logo" />
 
         <div class="connect">
           <h3>Let's connect!</h3>

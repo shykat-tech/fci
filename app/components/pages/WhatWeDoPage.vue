@@ -1,15 +1,46 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+
+const { pageData } = defineProps({
+  pageData: {
+    type: Object,
+    required: true,
+  },
+});
+
+const pageRef = ref(null);
+
+/* Import blocks */
+import { Header, Sections, Media, Focus } from "~/components/blocks/whatwedo";
+
+/* Map wagtail block types to components */
+const componentLookup: Record<string, any> = {
+  header: Header,
+  sections: Sections,
+  media: Media,
+  focus: Focus,
+};
+
+/* Resolve correct component */
+const resolveComponent = (type: string) => {
+  return componentLookup[type] || null;
+};
+</script>
 
 <template>
-  <div class="whatwedo">
-    <PageTitle
-      title="What we do"
-      subtitle="We specialize in premium garment manufacture, ranging from high-quality basics through to precision tailoring for some of the world’s leading fashion brands."
-    />
+  <div ref="pageRef" :key="pageData.id + pageData.meta.slug">
+    <NuxtLazyHydrate
+      v-for="block in pageData.body"
+      :key="block.id"
+      when-visible
+    >
+      <component
+        v-if="resolveComponent(block.type)"
+        :is="resolveComponent(block.type)"
+        :id="'comp-' + block.id"
+        :compData="block.value"
+        :compId="block.id"
+      />
+    </NuxtLazyHydrate>
   </div>
 </template>
-
-<style scoped lang="scss">
-.whatwedo {
-}
-</style>

@@ -49,7 +49,9 @@ onMounted(() => {
   tl.to(
     imgInner.value,
     {
-      y: () => imgInner.value!.offsetHeight - imgContainer.value!.offsetHeight,
+      y: () =>
+        (imgInner.value!.offsetHeight - imgContainer.value!.offsetHeight) *
+        1.15,
       ease: "none",
     },
     "<",

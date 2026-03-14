@@ -3,9 +3,9 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  // outline: 1px dashed red;
+  // outline: 1px dashed rgba(255, 0, 0, 0.144);
 }
-html{
+html {
   scrollbar-gutter: stable;
 }
 
@@ -32,6 +32,7 @@ body {
 }
 
 .primary-btn,
+.secondary-btn,
 .base-btn {
   font-family: $montserrat;
   color: $light;
@@ -47,7 +48,8 @@ body {
   position: relative;
   overflow: hidden;
 
-  span {
+  span,
+  a {
     display: inline-block;
     vertical-align: middle;
     position: relative;
@@ -113,4 +115,25 @@ body {
 
 .base-btn {
   background-color: $base;
+}
+
+.secondary-btn {
+  border: 1px solid $base;
+
+  span,
+  a {
+    &::before {
+      color: $base;
+    }
+  }
+
+  &:hover {
+    &::after {
+      background-color: $base;
+    }
+
+    span::after {
+      color: $light;
+    }
+  }
 }

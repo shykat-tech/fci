@@ -19,7 +19,7 @@ import {
   Customers,
   Sustainability,
   Testimonials,
-} from "~/components/blocks";
+} from "~/components/blocks/home";
 
 /* Map wagtail block types to components */
 const componentLookup: Record<string, any> = {

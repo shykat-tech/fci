@@ -30,6 +30,8 @@
         }"
       />
     </div>
+
+    <div class="bottom-line"></div>
   </div>
 </template>
 
@@ -37,7 +39,16 @@
 .our-collections {
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
+  // overflow: hidden;
+
+  .bottom-line {
+    position: absolute;
+    bottom: -5%;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background: linear-gradient(transparent 0%, $light 50%, transparent 100%);
+  }
 
   @include clamp-property("padding-bottom", 7.5, 12.62);
   .content {

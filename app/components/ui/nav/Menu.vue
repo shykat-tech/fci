@@ -114,13 +114,13 @@ const activeLink = ref<MainListType | null>(null);
           <NuxtLink
             :to="link.children ? undefined : link.slug"
             v-for="link in menuList"
-            @click="link.children === null && closeMenu"
             class="fLink"
             :class="{
               hasLink: link.children,
               active: link.children && link.slug === activeLink?.slug,
             }"
             @mouseenter="activeLink = link"
+            @click="!link.children && closeMenu()"
           >
             {{ link.label }}
 

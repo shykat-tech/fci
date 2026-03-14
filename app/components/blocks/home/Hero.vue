@@ -14,19 +14,22 @@ const header = ref<HTMLDivElement | null>(null);
 const subtitle = ref<HTMLHeadingElement | null>(null);
 
 const { $gsap } = useNuxtApp();
-let mm;
+const { add, cleanup } = useGsapCleanup();
+
+let mm: gsap.MatchMedia | null = null;
 
 onMounted(() => {
   mm = $gsap.matchMedia();
 
   mm.add(
     {
+      xs: "(max-width:365px)",
       sm: "(min-width: 366px) and (max-width: 480px)",
       md: "(min-width: 481px) and (max-width: 1024px)",
       lg: "(min-width: 1025px)",
     },
     (context) => {
-      const { sm, lg } = context.conditions;
+      const { sm, lg } = context.conditions || {};
 
       const titleSpans = titleRef.value?.querySelectorAll(
         "span",
@@ -49,16 +52,8 @@ onMounted(() => {
           duration: 1.5,
         },
       )
-        // .from(
-        //   "#navbar",
-        //   {
-        //     y: -100,
-        //     opacity: 1,
-        //   },
-        //   "-=0.5",
-        // )
         .from(
-          titleSpans[1],
+          titleSpans[1] ?? [],
           {
             y: 100,
             opacity: 0,
@@ -66,7 +61,7 @@ onMounted(() => {
           "<",
         )
         .from(
-          titleSpans[0],
+          titleSpans[0] ?? [],
           {
             x: sm ? 0 : -200,
             y: sm ? 50 : 0,
@@ -75,7 +70,7 @@ onMounted(() => {
           sm ? "<" : "-=0.5",
         )
         .from(
-          titleSpans[2],
+          titleSpans[2] ?? [],
           {
             x: sm ? 0 : 200,
             y: sm ? 150 : 0,
@@ -100,6 +95,8 @@ onMounted(() => {
           "<",
         );
 
+      add(tl);
+
       const tl2 = $gsap.timeline({
         scrollTrigger: {
           trigger: header.value,
@@ -107,6 +104,8 @@ onMounted(() => {
           toggleActions: "play none none reverse",
         },
       });
+
+      add(tl2);
 
       lg &&
         tl2
@@ -129,7 +128,7 @@ onMounted(() => {
             "<",
           )
           .to(
-            titleSpans[1],
+            titleSpans[1] ?? [],
             {
               marginTop: "0.25rem",
               marginBottom: "0.25rem",
@@ -138,6 +137,11 @@ onMounted(() => {
           );
     },
   );
+});
+
+onBeforeUnmount(() => {
+  cleanup();
+  mm?.kill();
 });
 </script>
 
