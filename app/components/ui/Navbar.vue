@@ -48,7 +48,7 @@ onMounted(async () => {
   tl.from(navRef.value, {
     y: -100,
     opacity: 0,
-    delay: 1,
+    delay: route.path === "/" && 1,
   });
 
   add(tl);

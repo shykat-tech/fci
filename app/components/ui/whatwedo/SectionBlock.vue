@@ -12,7 +12,9 @@ const { sectionData, align } = defineProps({
 });
 const { baseURL } = useBackendAPI();
 
-const { data } = (await useFetch(baseURL + sectionData?.link?.url)) as any;
+const { data } = await useFetch(baseURL + sectionData?.link?.url);
+
+console.log(sectionData);
 
 const route = useRoute();
 
@@ -54,13 +56,15 @@ onMounted(() => {
       <h2 class="title">{{ sectionData?.title }}</h2>
       <div class="desc" v-html="sectionData?.description" />
 
-      <button class="secondary-btn">
-        <span :data-content="'Explore ' + sectionData?.title">
-          <NuxtLink :to="`${route.path}/${data?.meta?.slug}`">
+      <NuxtLink
+        :to="`${route.path}/${sectionData?.link ? sectionData?.link?.id : '#'}`"
+      >
+        <button class="secondary-btn">
+          <span :data-content="'Explore ' + sectionData?.title">
             Explore {{ sectionData?.title }}
-          </NuxtLink>
-        </span>
-      </button>
+          </span>
+        </button>
+      </NuxtLink>
     </div>
 
     <div class="right-col" ref="rightCol">
