@@ -13,6 +13,10 @@ const focusRef = ref<HTMLDivElement | null>(null);
 const leftCol = ref<HTMLDivElement | null>(null);
 const serialRef = ref<HTMLDivElement | null>(null);
 
+const maxValue = computed(() =>
+  Math.max(...compData.stats.map((stat: any) => Number(stat?.serial || 0))),
+);
+
 let mm: gsap.MatchMedia | null = null;
 
 onMounted(async () => {
@@ -28,36 +32,30 @@ onMounted(async () => {
       lg: "(min-width: 1025px)",
     },
     (context) => {
-      const { sm, lg } = context.conditions || {};
-
-      const stats = $gsap.utils.toArray<HTMLElement>(".stats");
+      const stats = $gsap.utils.toArray<HTMLElement>(".stats", focusRef.value);
 
       stats.forEach((el, i) => {
         $gsap.from(el, {
-          y: 80,
+          y: 50,
           opacity: 0,
           scrollTrigger: {
             trigger: el,
-            start: "-10% bottom",
+            start: "top bottom",
             end: "bottom bottom",
             toggleActions: "play none none reverse",
 
             onEnter: () => {
-              activeSerial.value = i + 1;
-
-              lg &&
-                $gsap.to(leftCol.value, {
-                  height: `${15 * (i + 1)}rem`,
-                });
+              $gsap.to(serialRef.value, {
+                yPercent: `-${100 * i}`,
+                ease: "none",
+              });
             },
 
             onEnterBack: () => {
-              activeSerial.value = i + 1;
-
-              lg &&
-                $gsap.to(leftCol.value, {
-                  height: `${15 * (i + 1)}rem`,
-                });
+              $gsap.to(serialRef.value, {
+                yPercent: `-${100 * i}`,
+                ease: "none",
+              });
             },
             onLeaveBack: () => {
               activeSerial.value = Math.max(1, i);
@@ -73,12 +71,15 @@ onMounted(async () => {
 <template>
   <div class="focus container" ref="focusRef">
     <div class="left-col" ref="leftCol">
-      <h2 class="title">Our Focus</h2>
+      <h2 class="title">{{ compData?.title ?? "Our Focus" }}</h2>
 
-      <span class="serial-wrapper">
-        <span class="serial" ref="serialRef">{{
-          String(activeSerial).padStart(2, "0")
-        }}</span>
+      <span class="serial-wrapper" ref="serialWrapperRef">
+        <span class="before-serial" v-if="maxValue < 10">0</span>
+        <span class="serial" ref="serialRef">
+          <span v-for="(stat, i) in compData?.stats" :key="i">
+            {{ Number(stat?.serial) }}</span
+          >
+        </span>
       </span>
     </div>
 
@@ -86,8 +87,8 @@ onMounted(async () => {
       <div class="stats" v-for="(stat, i) in compData?.stats" :key="i">
         <span class="serial">{{ stat?.serial }}</span>
 
-        <div class="label">{{ stat?.title || stat?.label }}</div>
-        <div class="value">{{ stat?.description || stat?.value }}</div>
+        <div class="label" v-html="stat?.label" />
+        <div class="value" v-html="stat?.value" />
       </div>
     </div>
   </div>
@@ -97,13 +98,10 @@ onMounted(async () => {
 .focus {
   width: 100%;
   position: relative;
-
   @include clamp-property("padding-block", 7.5, 12.5);
-  @include flex(space-between, stretch, column);
+  @include flex(space-between, start, column);
 
   .left-col {
-    height: 100%;
-    @include flex(start, start, column);
     .title {
       color: $black;
       font-style: normal;
@@ -112,13 +110,14 @@ onMounted(async () => {
       text-transform: uppercase;
       font-size: 700;
       margin-bottom: 3rem;
+      position: relative;
 
       @include clamp-property("font-size", 1.75, 3);
       @include clamp-property("letter-spacing", -0.0525, -0.09);
 
       @media screen and (min-width: 1024px) {
         font-weight: 450;
-        margin-bottom: 5.5rem;
+        margin-bottom: 0;
       }
     }
 
@@ -126,23 +125,50 @@ onMounted(async () => {
       display: none;
     }
 
+    .before-serial {
+      display: none;
+    }
+
     @media screen and (min-width: 1024px) {
       width: 50%;
+      height: calc(100svh - var(--nav-desktop-height));
       position: sticky;
       top: var(--nav-desktop-height);
-      padding-bottom: 5.5rem;
 
-      @include flex(space-between, start, column);
+      @include flex(start, start, column);
+
+      @include flex(start, start, column);
 
       .serial-wrapper {
+        margin-top: calc(4.5rem);
+        position: sticky;
+        top: 75%;
+        overflow: hidden;
+
+        @include clamp-property("margin-bottom ", 2.5, 5);
+        @include flex(center, center);
+
+        .before-serial {
+          width: 100%;
+          display: block;
+          font-size: 11.25rem;
+          font-weight: 600;
+          line-height: 100%;
+          color: $base;
+          height: 11.25rem;
+          transform: translateY(0);
+        }
+
         :deep(.serial) {
           width: 100%;
           display: block;
-          color: $base;
-          font-style: normal;
+          font-size: 11.25rem;
           font-weight: 600;
           line-height: 100%;
-          font-size: 11.25rem;
+          color: $base;
+          height: 11.25rem;
+
+          @include flex(start, start, column);
         }
       }
     }
@@ -192,7 +218,6 @@ onMounted(async () => {
       .stats {
         .serial {
           display: none;
-          margin-top: 5rem;
         }
       }
     }
@@ -205,8 +230,8 @@ onMounted(async () => {
     content: "";
     position: absolute;
     inset: 0;
-    background: url("~/assets/images/stats-bg.png") lightgray -38.39px 0px /
-      169.58% 100% no-repeat;
+    background: url("~/assets/images/stats-bg.png") rgb(255, 255, 255) -38.39px
+      0px / 169.58% 100% no-repeat;
 
     opacity: 0.25;
     z-index: -1;

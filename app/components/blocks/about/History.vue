@@ -7,10 +7,35 @@ const { compData } = defineProps({
 });
 
 const { baseURL } = useBackendAPI();
+
+const { $gsap } = useNuxtApp();
+
+// Ref
+const history = ref(null);
+const pBar = ref(null);
+const sBar = ref(null);
+
+onMounted(async () => {
+  await nextTick();
+
+  const tl = $gsap.timeline({
+    scrollTrigger: {
+      trigger: history.value,
+      start: "top 90%",
+      // markers: true,
+      scrub: true,
+      onUpdate: (self) => {
+        $gsap.to([pBar.value, sBar.value], {
+          height: `${self.progress * 100}%`,
+        });
+      },
+    },
+  });
+});
 </script>
 
 <template>
-  <div class="history">
+  <div class="history" ref="history">
     <SectionTitle
       :title="compData?.title"
       heading="History Timeline"
@@ -18,15 +43,17 @@ const { baseURL } = useBackendAPI();
     />
 
     <div class="progress">
-      <div class="progressBar" />
+      <div class="progressBar" ref="pBar" />
     </div>
 
     <div class="content container">
       <div class="timeline" v-for="timeline in compData?.history">
         <img
+          v-if="timeline?.image"
           :src="baseURL + timeline?.image?.renditions?.original"
           alt="header-img"
         />
+        <div v-else class="empty"></div>
 
         <div class="timeline-desc">
           <h2 class="year">{{ timeline?.year }}</h2>
@@ -34,6 +61,10 @@ const { baseURL } = useBackendAPI();
 
           <div class="desc" v-html="timeline?.description" />
         </div>
+      </div>
+
+      <div class="s-progress">
+        <div class="s-progressBar" ref="sBar" />
       </div>
     </div>
   </div>
@@ -53,33 +84,60 @@ const { baseURL } = useBackendAPI();
     background: rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 0;
-    left: 50%;
+    display: none;
     // @include flex(center, start);
 
     .progressBar {
       width: 2px;
       margin-left: -1px;
-      height: 30%;
       background: $shade-2;
+    }
+
+    @media screen and (min-width: 1024px) {
+      left: 50%;
+      display: block;
     }
   }
 
   .content {
+    position: relative;
     @include clamp-property("margin-top", 3, 10);
+    @include clamp-property("margin-left", 1.25, 0);
 
     & > * + * {
-      @include clamp-property("margin-top", 4, 7.5);
+      @include clamp-property("padding-top", 4, 7.5);
+    }
+
+    .s-progress {
+      width: 1px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      .s-progressBar {
+        width: 2px;
+        margin-left: -1px;
+        margin-top: -4rem;
+        background: $shade-2;
+      }
+
+      @media screen and (min-width: 1024px) {
+        display: none;
+      }
     }
 
     .timeline {
-      @include flex(space-between, start);
+      @include flex(space-between, start, column-reverse);
+      gap: 1.5rem;
 
       img {
-        width: 40%;
+        width: 100%;
       }
 
       .timeline-desc {
-        width: 40%;
+        width: 100%;
 
         .year {
           color: $shade-2;
@@ -101,9 +159,6 @@ const { baseURL } = useBackendAPI();
           @include clamp-property("margin-bottom", 1, 1.5);
         }
 
-        .desc {
-        }
-
         color: $black;
         font-style: normal;
         font-weight: 450;
@@ -113,7 +168,21 @@ const { baseURL } = useBackendAPI();
       }
 
       &:nth-child(even) {
-        flex-direction: row-reverse;
+        flex-direction: column-reverse;
+      }
+
+      @media screen and (min-width: 1024px) {
+        flex-direction: row;
+        &:nth-child(even) {
+          flex-direction: row-reverse;
+        }
+        img {
+          width: 40%;
+        }
+
+        .timeline-desc {
+          width: 40%;
+        }
       }
     }
   }

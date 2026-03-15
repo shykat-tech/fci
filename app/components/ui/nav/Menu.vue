@@ -19,6 +19,11 @@ const menuList = [
     children: null,
   },
   {
+    label: "About Us",
+    slug: "/about",
+    children: null,
+  },
+  {
     label: "Collections",
     slug: "/collections",
     children: [

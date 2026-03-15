@@ -55,7 +55,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .media {
   width: 100%;
-  height: 100vh;
+  height: 120vh;
   overflow: hidden;
   position: relative;
 

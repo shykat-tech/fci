@@ -36,7 +36,7 @@ onMounted(() => {
   });
 
   $gsap.from(rightCol.value, {
-    width: "50rem",
+    width: "40rem",
     scrollTrigger: {
       trigger: rightCol.value,
       start: "top 80%",
@@ -69,10 +69,7 @@ onMounted(() => {
 
     <div class="right-col" ref="rightCol">
       <ImageWrapperAnim>
-        <img
-          :src="baseURL + sectionData?.image?.renditions?.original"
-          ref="img"
-        />
+        <img :src="baseURL + sectionData?.image?.renditions?.exact" ref="img" />
       </ImageWrapperAnim>
     </div>
   </div>
@@ -85,7 +82,9 @@ onMounted(() => {
 
   .left-col {
     @media screen and (min-width: 1024px) {
-      width: 47.75rem;
+      // @include clamp-property("width", 45, 47.5);
+      flex-shrink: 0;
+      flex: 1;
     }
 
     .title {
@@ -129,20 +128,23 @@ onMounted(() => {
   .right-col {
     width: 100%;
     height: 27.5rem;
+    flex-shrink: 0;
 
     img {
       width: 100%;
-      height: 120%;
+      height: 130%;
       object-fit: cover;
-      object-position: center;
+      // object-position: center;
 
       position: absolute;
       left: 0;
       bottom: 0;
     }
+
     @media screen and (min-width: 1024px) {
-      width: 40rem;
-      height: 48rem;
+      @include clamp-property("width", 36, 37);
+
+      @include clamp-property("height", 46, 48);
     }
   }
 

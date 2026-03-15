@@ -12,12 +12,16 @@ const pageRef = ref(null);
 
 /* Import blocks */
 import { Header, History, MissionVision } from "~/components/blocks/about";
+import { Focus } from "~/components/blocks/whatwedo";
+import { Customers } from "~/components/blocks/home";
 
 /* Map wagtail block types to components */
 const componentLookup: Record<string, any> = {
   header: Header,
   history: History,
   mission_vision: MissionVision,
+  stats: Focus,
+  certifications: Customers,
 };
 
 /* Resolve correct component */

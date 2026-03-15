@@ -26,8 +26,6 @@ const { compData } = defineProps({
   @include clamp-property("padding-block", 7.5, 12.5);
 
   .block {
-    width: 50%;
-
     .title {
       color: $black;
       font-style: normal;
@@ -53,6 +51,10 @@ const { compData } = defineProps({
     &:nth-child(even) {
       margin-left: auto;
       @include clamp-property("margin-top", 4, 10);
+    }
+
+    @media screen and (min-width: 1024px) {
+      width: 50%;
     }
   }
 }

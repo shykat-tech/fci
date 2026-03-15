@@ -1,4 +1,13 @@
 <script setup lang="ts">
+const { compData } = defineProps({
+  compData: {
+    type: Object,
+    required: true,
+  },
+});
+
+const { baseURL } = useBackendAPI();
+
 const { $gsap } = useNuxtApp();
 
 // Ref
@@ -46,40 +55,18 @@ onMounted(() => {
 <template>
   <div class="customers" ref="customers">
     <SectionTitle
-      heading="Our customers"
-      title="A trusted partner to global brands."
-      subtitle="FCI’s strength lies in their ability to balance design integrity, operational excellence, and responsible manufacturing."
+      :heading="compData?.heading?.length && compData?.heading"
+      :title="compData?.title"
+      :subtitle="compData?.subtitle"
     />
 
-    <div class="watermark" ref="watermark">Clients</div>
+    <div class="watermark" ref="watermark">
+      {{ compData?.heading?.length ? compData?.heading : compData?.title }}
+    </div>
 
     <div class="clients-logo container" ref="container">
-      <div class="box">
-        <img src="~/assets/images/c3.png" alt="" />
-      </div>
-      <div class="box">
-        <img src="~/assets/images/c2.png" alt="" />
-      </div>
-      <div class="box">
-        <img src="~/assets/images/c1.png" alt="" />
-      </div>
-      <div class="box">
-        <img src="~/assets/images/c3.png" alt="" />
-      </div>
-      <div class="box">
-        <img src="~/assets/images/c2.png" alt="" />
-      </div>
-      <div class="box">
-        <img src="~/assets/images/c1.png" alt="" />
-      </div>
-      <div class="box">
-        <img src="~/assets/images/c3.png" alt="" />
-      </div>
-      <div class="box">
-        <img src="~/assets/images/c2.png" alt="" />
-      </div>
-      <div class="box">
-        <img src="~/assets/images/c1.png" alt="" />
+      <div class="box" v-for="img in compData?.partners">
+        <img :src="baseURL + img?.renditions?.exact" alt="" />
       </div>
     </div>
   </div>
@@ -104,6 +91,7 @@ onMounted(() => {
     left: 50%;
     transform: translateX(-50%);
     opacity: 0.02;
+    text-wrap: nowrap;
 
     @include clamp-property("font-size", 5, 18.75);
 
@@ -132,6 +120,7 @@ onMounted(() => {
 
     @media screen and (min-width: 1024px) {
       grid-template-columns: repeat(6, 1fr);
+      justify-content: center;
     }
   }
 }

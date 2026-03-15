@@ -11,53 +11,50 @@ const { $gsap } = useNuxtApp();
 //Ref
 const section = ref<HTMLDivElement | null>(null);
 const overlay = ref<HTMLDivElement | null>(null);
+const circleImg = ref<HTMLImageElement | null>(null);
 
-// onMounted(() => {
-//   const tl = $gsap.timeline({
-//     scrollTrigger: {
-//       trigger: overlay.value,
-//       start: "top top",
-//       end: "bottom bottom",
-//       markers: true,
-//       pin: true,
-//       scrub: true,
-//     },
-//   });
+onMounted(() => {
+  const tl = $gsap.timeline({
+    scrollTrigger: {
+      trigger: section.value,
+      start: "top center",
+      end: "bottom top",
+      scrub: true,
+      toggleActions: "play none none reverse",
+    },
+  });
 
-//   tl.to(overlay.value, {
-//     scale: 0.7,
-//   });
-// });
+  tl.from(circleImg.value, {
+    scale: 1.6,
+  })
+    .to(
+      overlay.value,
+      {
+        top: "unset",
+        bottom: "5%",
+      },
+      "<",
+    )
+    .to(circleImg.value, {
+      scale: 0.9,
+    });
+});
 </script>
 
 <template>
   <div class="sections" ref="section">
-    <WhatwedoSectionBlock
-      :sectionData="item"
-      :align="+i % 2 !== 0 ? 'left' : ''"
-      v-for="(item, i) in compData?.sections"
-      :key="i + 'section-block' + item?.title"
-    />
+    <div class="blocks">
+      <WhatwedoSectionBlock
+        :sectionData="item"
+        :align="+i % 2 !== 0 ? 'left' : ''"
+        v-for="(item, i) in compData?.sections"
+        :key="i + 'section-block' + item?.title"
+      />
+    </div>
 
-    <!-- <div class="overlay" ref="overlay">
-      <svg
-        class="back-circle"
-        ref="backCircle"
-        width="1920"
-        height="1080"
-        viewBox="0 0 1920 1080"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle
-          cx="960.5"
-          cy="556.5"
-          r="945.5"
-          stroke="black"
-          stroke-width="400"
-        />
-      </svg>
-    </div> -->
+    <div class="overlay" ref="overlay">
+      <img src="/svg/circle.svg" alt="big-circle" ref="circleImg" />
+    </div>
   </div>
 </template>
 
@@ -65,22 +62,26 @@ const overlay = ref<HTMLDivElement | null>(null);
 .sections {
   position: relative;
   overflow: hidden;
-  @include clamp-property("padding-block", 7.5, 12.5);
+  background-color: #f9f9f9;
 
-  & > * + * {
-    @include clamp-property("margin-top", 5, 12.5);
+  .blocks {
+    position: relative;
+    z-index: 2;
+    @include clamp-property("padding-block", 7.5, 12.5);
+
+    & > * + * {
+      @include clamp-property("margin-top", 5, 12.5);
+    }
   }
 
   .overlay {
+    width: 150%;
     position: absolute;
     top: 0;
     left: 50%;
-    width: 100%;
-    height: 100%;
     transform: translateX(-50%);
-    z-index: -2;
 
-    svg {
+    img {
       width: 100%;
     }
   }
