@@ -24,6 +24,11 @@ const menuList = [
     children: null,
   },
   {
+    label: "Sustainability",
+    slug: "/sustainability",
+    children: null,
+  },
+  {
     label: "Collections",
     slug: "/collections",
     children: [

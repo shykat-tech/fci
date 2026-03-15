@@ -20,12 +20,14 @@ const apiFetchConfig = useBackendAPI();
 const pageUrl = route.fullPath.split("?")[0].split("#")[0];
 
 // fetch data
-const { data, error } = await useAsyncData(pageUrl, () =>
-  // $fetch(
-  //   `/api/v2/pages/find/?format=json&redirect=false&html_path=${pageUrl}`,
-  //   apiFetchConfig,
-  // ),
-  $fetch("/home.json"),
+const { data, error } = await useAsyncData(
+  pageUrl,
+  () =>
+    $fetch(
+      `/api/v2/pages/find/?format=json&redirect=false&html_path=${pageUrl}`,
+      apiFetchConfig,
+    ),
+  // $fetch("/home.json"),
 );
 
 const pageData = data?.value || null;

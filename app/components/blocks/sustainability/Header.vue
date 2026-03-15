@@ -7,32 +7,15 @@ const { compData } = defineProps({
 });
 
 const { baseURL } = useBackendAPI();
-
-const thumbnail = ref(null);
-
-const { $gsap } = useNuxtApp();
-
-onMounted(() => {
-  $gsap.from(thumbnail.value, {
-    y: 120,
-    opacity: 0,
-    delay: 0.3,
-    scale: 0.9,
-  });
-});
 </script>
 
 <template>
   <div class="header">
     <PageTitle :title="compData?.title" :subtitle="compData?.subtitle" />
 
-    <div class="thumbnail" ref="thumbnail">
+    <div class="thumbnail">
       <img
-        :src="
-          baseURL +
-          (compData?.background_image?.renditions?.original ??
-            compData?.image?.renditions?.original)
-        "
+        :src="baseURL + compData?.background_image?.renditions?.original"
         alt="header-img"
       />
     </div>

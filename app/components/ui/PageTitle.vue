@@ -21,7 +21,10 @@ let mm: gsap.MatchMedia | null = null;
 
 onMounted(async () => {
   await nextTick();
+
   mm = $gsap.matchMedia();
+
+  console.log(titleRef.value.clientHeight);
 
   mm.add(
     {
@@ -31,39 +34,59 @@ onMounted(async () => {
       lg: "(min-width: 1025px)",
     },
     (context) => {
-      const { xs, sm, md, lg } = context.conditions || {};
+      const { md, lg } = context.conditions || {};
 
-      const tl = $gsap.timeline();
+      const tl = $gsap.timeline({
+        defaults: {
+          ease: "power3.out",
+          duration: 0.8,
+        },
+      });
 
-      tl.from(titleRef.value, { opacity: 0, y: 150 }).from(
+      // intro animation
+      tl.from(titleRef.value, {
+        opacity: 0,
+        y: 120,
+      }).from(
         subtitleRef.value,
-        { opacity: 0, y: 150 },
-        "-=0.2",
+        {
+          opacity: 0,
+          y: 120,
+        },
+        "-=0.5",
       );
 
       if ((md || lg) && titleRef.value) {
-        const tl2 = $gsap.timeline({
+        const scrollTL = $gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.value,
-            start: "15% top",
+            start: "10% top",
+            end: "+=200",
             toggleActions: "play none none reverse",
           },
         });
 
-        tl2
+        scrollTL
           .to(titleRef.value, {
-            fontSize: "3rem",
-            justifyContent: "start",
-            duration: 0.6,
+            scale: 0.5,
+            transformOrigin: "center top",
+            xPercent: -25,
           })
           .to(
             subtitleRef.value,
             {
-              marginTop: `-${titleRef.value?.offsetHeight - 16}px`,
-              duration: 0.6,
+              y: -(titleRef.value.clientHeight + 60),
+              x: 0,
             },
             "<",
           );
+        // .to(
+        //   sectionRef.value,
+        //   {
+        //     height: `34rem`,
+        //   },
+        //   "<",
+        // );
       }
     },
   );
@@ -85,6 +108,7 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .pageTitle {
   position: relative;
+
   padding-top: calc(5.75rem + var(--nav-mobile-height));
 
   @media screen and (min-width: 1024px) {
