@@ -19,13 +19,29 @@ const navMobEl = ref<HTMLDivElement | null>(null);
 const navRef = ref<HTMLElement | null>(null);
 
 const navWhite = ref(false);
+const scrollUp = ref(false);
+const scrollDown = ref(false);
+
+let lastScrollY = window.scrollY;
 
 const handleScroll = () => {
-  if (window.scrollY > 200) {
-    navWhite.value = true;
+  const currentScrollY = window.scrollY;
+  const scrollingUp = currentScrollY < lastScrollY;
+
+  if (currentScrollY > 100) {
+    if (scrollingUp) {
+      scrollUp.value = true;
+      scrollDown.value = false;
+    } else {
+      scrollDown.value = true;
+      scrollUp.value = false;
+    }
   } else {
-    navWhite.value = false;
+    scrollUp.value = false;
+    scrollDown.value = false;
   }
+
+  lastScrollY = currentScrollY;
 };
 
 onMounted(async () => {
@@ -45,11 +61,11 @@ onMounted(async () => {
 
   const tl = $gsap.timeline();
 
-  tl.from(navRef.value, {
-    y: -100,
-    opacity: 0,
-    delay: route.path === "/" && 1,
-  });
+  // tl.from(navRef.value, {
+  //   y: -100,
+  //   opacity: 0,
+  //   delay: route.path === "/" && 1,
+  // });
 
   add(tl);
 
@@ -62,13 +78,17 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <nav id="navbar" ref="navRef" :class="navWhite ? 'nav-white' : ''">
+  <nav
+    id="navbar"
+    ref="navRef"
+    :class="scrollUp ? 'up' : scrollDown ? 'down' : 'base'"
+  >
     <!-- <WGImg image="/svg/logo.svg" alt="FCI-logo"/> -->
     <div class="nav container nav-desktop" ref="navDeskEl">
       <NuxtLink to="/" class="logo">
         <Transition name="alt">
           <img
-            v-if="navWhite"
+            v-if="scrollUp"
             src="/svg/logo-dark.svg"
             alt="FCI-logo"
             class="alt-logo"
@@ -86,7 +106,7 @@ onBeforeUnmount(() => {
       <div class="btn-wrapper">
         <Transition name="alt">
           <button
-            v-if="navWhite"
+            v-if="scrollUp"
             class="base-btn altBtn"
             @click="handleOpenMenu"
           >
@@ -107,7 +127,7 @@ onBeforeUnmount(() => {
       <NuxtLink to="/" class="logo">
         <Transition name="alt">
           <img
-            v-if="navWhite"
+            v-if="scrollUp"
             src="/svg/logo-dark.svg"
             alt="FCI-logo"
             class="alt-logo"
@@ -166,9 +186,31 @@ onBeforeUnmount(() => {
 #navbar {
   width: 100%;
   height: auto;
-  background-color: transparent;
   position: fixed;
   z-index: 999;
+  transition: all 0.45s ease;
+  // transform: translateY(100px);
+
+  &.base {
+    background-color: transparent;
+  }
+
+  &.down {
+    background-color: transparent;
+    transform: translateY(-100%);
+  }
+
+  &.up {
+    background-color: $white;
+    border-bottom: 1px solid $light;
+
+    .logo .main-logo {
+      opacity: 0;
+    }
+    .btn-wrapper .mainBtn {
+      opacity: 0;
+    }
+  }
 
   .nav-desktop,
   .nav-mobile {
@@ -299,6 +341,6 @@ onBeforeUnmount(() => {
 .alt-enter-from,
 .alt-leave-to {
   transform: translateY(-100%);
-  opacity: 0;
+  // opacity: 0;
 }
 </style>

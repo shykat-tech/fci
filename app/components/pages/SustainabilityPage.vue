@@ -12,10 +12,20 @@ const pageRef = ref(null);
 
 /* Import blocks */
 import { Header } from "~/components/blocks/about";
+import {
+  Commitment,
+  Accordion,
+  Focuses,
+} from "~/components/blocks/sustainability";
+import { Customers } from "~/components/blocks/home";
 
 /* Map wagtail block types to components */
 const componentLookup: Record<string, any> = {
   header: Header,
+  commitment: Commitment,
+  accordion: Accordion,
+  focuses: Focuses,
+  certifications: Customers,
 };
 
 /* Resolve correct component */

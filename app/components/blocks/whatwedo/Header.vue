@@ -11,7 +11,9 @@ const { compData } = defineProps({
   <div>
     <PageTitle :title="compData?.title" :subtitle="compData?.subtitle" />
 
-    <ImageCarousel :images="compData?.carousel" />
+    <div class="carousel">
+      <ImageCarousel :images="compData?.carousel" />
+    </div>
   </div>
 </template>
 

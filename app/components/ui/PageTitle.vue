@@ -24,8 +24,6 @@ onMounted(async () => {
 
   mm = $gsap.matchMedia();
 
-  console.log(titleRef.value.clientHeight);
-
   mm.add(
     {
       xs: "(max-width:365px)",
@@ -34,7 +32,7 @@ onMounted(async () => {
       lg: "(min-width: 1025px)",
     },
     (context) => {
-      const { md, lg } = context.conditions || {};
+      const { xs, sm, md, lg } = context.conditions || {};
 
       const tl = $gsap.timeline({
         defaults: {
@@ -56,7 +54,7 @@ onMounted(async () => {
         "-=0.5",
       );
 
-      if ((md || lg) && titleRef.value) {
+      if ((md || lg) && titleRef.value && subtitleRef.value) {
         const scrollTL = $gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.value,
@@ -77,16 +75,10 @@ onMounted(async () => {
             {
               y: -(titleRef.value.clientHeight + 60),
               x: 0,
+              marginBottom: -subtitleRef.value.clientHeight,
             },
             "<",
           );
-        // .to(
-        //   sectionRef.value,
-        //   {
-        //     height: `34rem`,
-        //   },
-        //   "<",
-        // );
       }
     },
   );

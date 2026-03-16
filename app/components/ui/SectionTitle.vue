@@ -112,7 +112,7 @@ onMounted(() => {
     @include clamp-property("margin-bottom", 1.5, 2.5);
 
     @media screen and (min-width: 1024px) {
-      width: 90%;
+      width: 100%;
     }
   }
   p {
