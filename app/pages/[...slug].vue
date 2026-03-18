@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-if="error">Something went wrong!</div>
+    <div v-if="error" class="error-block">
+      <h1>Something went wrong!</h1>
+      <p>This page is not ready to view yet.</p>
+    </div>
     <div v-if="pageData" class="page-container" :key="'page' + pageData.id">
       <component
         :is="resolveComponent(pageType)"
