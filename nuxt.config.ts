@@ -64,9 +64,13 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    apiBase: process.env.VUE_APP_DEVHOST || "",
+    // for wagtail cms api
+    apiBase: process.env.NUXT_API_BASE || "http://localhost:8000",
     public: {
-      apiBase: process.env.VUE_APP_DEVHOST || "",
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8000",
+      staticHost:
+        process.env.NUXT_PUBLIC_STATIC_HOST || "http://localhost:8000",
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
     },
   },
 

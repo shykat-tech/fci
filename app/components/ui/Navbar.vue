@@ -95,7 +95,7 @@ onBeforeUnmount(() => {
           />
         </Transition>
         <img
-          v-if="route.path === '/'"
+          v-if="route.path === '/' || route.path === '/contact'"
           src="/svg/logo.svg"
           alt="FCI-logo"
           class="main-logo"
@@ -134,7 +134,7 @@ onBeforeUnmount(() => {
           />
         </Transition>
         <img
-          v-if="route.path === '/'"
+          v-if="route.path === '/' || route.path === '/contact'"
           src="/svg/logo.svg"
           alt="FCI-logo"
           class="main-logo" />
@@ -143,7 +143,11 @@ onBeforeUnmount(() => {
 
       <svg
         @click="isMenuOpen = !isMenuOpen"
-        :style="route.path === '/' && { mixBlendMode: 'difference' }"
+        :style="
+          route.path === '/' && {
+            mixBlendMode: 'difference',
+          }
+        "
         width="40"
         height="40"
         viewBox="0 0 40 40"
@@ -152,21 +156,33 @@ onBeforeUnmount(() => {
       >
         <path
           d="M12 14H28"
-          :stroke="route.path === '/' ? '#ffffff' : '#04312a'"
+          :stroke="
+            route.path === '/' || route.path === '/contact'
+              ? '#ffffff'
+              : '#04312a'
+          "
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
         />
         <path
           d="M12 20H28"
-          :stroke="route.path === '/' ? '#ffffff' : '#04312a'"
+          :stroke="
+            route.path === '/' || route.path === '/contact'
+              ? '#ffffff'
+              : '#04312a'
+          "
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
         />
         <path
           d="M12 26H28"
-          :stroke="route.path === '/' ? '#ffffff' : '#04312a'"
+          :stroke="
+            route.path === '/' || route.path === '/contact'
+              ? '#ffffff'
+              : '#04312a'
+          "
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -209,6 +225,14 @@ onBeforeUnmount(() => {
     }
     .btn-wrapper .mainBtn {
       opacity: 0;
+    }
+
+    .nav-mobile {
+      svg {
+        path {
+          stroke: #04312a;
+        }
+      }
     }
   }
 

@@ -43,14 +43,9 @@ const menuList = [
     ],
   },
   {
-    label: "Life at FCI",
-    slug: "/life-at-fci",
-    children: [
-      {
-        label: "FCI BD",
-        slug: "/fci-bd",
-      },
-    ],
+    label: "Contact Us",
+    slug: "/contact",
+    children: null,
   },
 ];
 
